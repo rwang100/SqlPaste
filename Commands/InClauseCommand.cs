@@ -3,6 +3,7 @@ using System.ComponentModel.Design;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using Task = System.Threading.Tasks.Task;
@@ -12,12 +13,12 @@ namespace SqlPaste
     /// <summary>
     /// Command handler
     /// </summary>
-    internal sealed class WhereClauseCommand
+    internal sealed class InClauseCommand
     {
         /// <summary>
         /// Command ID.
         /// </summary>
-        public const int CommandId = 4129;
+        public const int CommandId = 0x0100;
 
         /// <summary>
         /// Command menu group (command set GUID).
@@ -30,12 +31,12 @@ namespace SqlPaste
         private readonly AsyncPackage package;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="WhereClauseCommand"/> class.
+        /// Initializes a new instance of the <see cref="InClauseCommand"/> class.
         /// Adds our command handlers for menu (commands must exist in the command table file)
         /// </summary>
         /// <param name="package">Owner package, not null.</param>
         /// <param name="commandService">Command service to add command to, not null.</param>
-        private WhereClauseCommand(AsyncPackage package, OleMenuCommandService commandService)
+        private InClauseCommand(AsyncPackage package, OleMenuCommandService commandService)
         {
             this.package = package ?? throw new ArgumentNullException(nameof(package));
             commandService = commandService ?? throw new ArgumentNullException(nameof(commandService));
@@ -48,7 +49,7 @@ namespace SqlPaste
         /// <summary>
         /// Gets the instance of the command.
         /// </summary>
-        public static WhereClauseCommand Instance
+        public static InClauseCommand Instance
         {
             get;
             private set;
@@ -71,12 +72,12 @@ namespace SqlPaste
         /// <param name="package">Owner package, not null.</param>
         public static async Task InitializeAsync(AsyncPackage package)
         {
-            // Switch to the main thread - the call to AddCommand in WhereClauseCommand's constructor requires
+            // Switch to the main thread - the call to AddCommand in InClauseCommand's constructor requires
             // the UI thread.
             await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync(package.DisposalToken);
 
             OleMenuCommandService commandService = await package.GetServiceAsync((typeof(IMenuCommandService))) as OleMenuCommandService;
-            Instance = new WhereClauseCommand(package, commandService);
+            Instance = new InClauseCommand(package, commandService);
         }
 
         /// <summary>
@@ -89,17 +90,18 @@ namespace SqlPaste
         private void Execute(object sender, EventArgs e)
         {
             ThreadHelper.ThrowIfNotOnUIThread();
-            string message = string.Format(CultureInfo.CurrentCulture, "Inside {0}.MenuItemCallback()", this.GetType().FullName);
-            string title = "WhereClauseCommand";
 
-            // Show a message box to prove we were here
-            VsShellUtilities.ShowMessageBox(
-                this.package,
-                message,
-                title,
-                OLEMSGICON.OLEMSGICON_INFO,
-                OLEMSGBUTTON.OLEMSGBUTTON_OK,
-                OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST);
+            if (!Clipboard.ContainsText())
+            {
+                return;
+            }
+
+            var grid = new GridData(Clipboard.GetText());
+            grid.DetermineNumericColumns();
+            grid.FormatGrid();
+            var inClauseOutput = new InClauseBuilder(grid).OutputString();
+
+            Clipboard.SetText(inClauseOutput);
         }
     }
 }
