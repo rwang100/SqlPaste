@@ -56,21 +56,21 @@
         <Parent guid="guidSqlPasteCommandPackageCmdSet" id="MyMenuGroup" />
         <Icon guid="guidImages" id="bmpPic1" />
         <Strings>
-          <ButtonText>Invoke InClauseCommand</ButtonText>
+          <ButtonText>Build In Clause from Clipboard</ButtonText>
         </Strings>
       </Button>
       <Button guid="guidSqlPasteCommandPackageCmdSet" id="cmdidWhereClauseCommand" priority="0x0100" type="Button">
         <Parent guid="guidSqlPasteCommandPackageCmdSet" id="MyMenuGroup" />
         <Icon guid="guidImages" id="bmpPic1" />
         <Strings>
-          <ButtonText>Invoke WhereClauseCommand</ButtonText>
+          <ButtonText>Build Where Clause from Clipboard</ButtonText>
         </Strings>
       </Button>
       <Button guid="guidSqlPasteCommandPackageCmdSet" id="cmdidTempTableCommand" priority="0x0100" type="Button">
         <Parent guid="guidSqlPasteCommandPackageCmdSet" id="MyMenuGroup" />
         <Icon guid="guidImages" id="bmpPic1" />
         <Strings>
-          <ButtonText>Invoke TempTableCommand</ButtonText>
+          <ButtonText>Build Temp Table from Clipboard</ButtonText>
         </Strings>
       </Button>
     </Buttons>

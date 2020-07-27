@@ -91,6 +91,9 @@ namespace SqlPaste
         {
             ThreadHelper.ThrowIfNotOnUIThread();
 
+            var wpfTextView = WpfTextViewHelper.GetWpfTextView(ServiceProvider);
+            var caretPosition = WpfTextViewHelper.GetCaretPosition(wpfTextView);
+
             if (!Clipboard.ContainsText())
             {
                 return;
@@ -101,7 +104,9 @@ namespace SqlPaste
             grid.FormatGrid();
             var inClauseOutput = new InClauseBuilder(grid).OutputString();
 
-            Clipboard.SetText(inClauseOutput);
+            var edit = wpfTextView.TextBuffer.CreateEdit();
+            edit.Insert(caretPosition, inClauseOutput);
+            edit.Apply();
         }
     }
 }
