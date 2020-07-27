@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.1209
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SqlPaste", "SqlPaste.csproj", "{5C68AD84-2CF1-41D6-9E07-77E04E7952D9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5C68AD84-2CF1-41D6-9E07-77E04E7952D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C68AD84-2CF1-41D6-9E07-77E04E7952D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C68AD84-2CF1-41D6-9E07-77E04E7952D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C68AD84-2CF1-41D6-9E07-77E04E7952D9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {27ED5A8D-3D18-4569-A05D-9B2779143D27}
+	EndGlobalSection
+EndGlobal
